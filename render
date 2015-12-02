@@ -1,0 +1,13 @@
+#!/bin/sh
+
+size=512
+duration=10
+fps=24
+brdf="alum-bronze"
+brdf2="blue-rubber"
+
+g++ code/eBRDFRead.cpp code/image.cpp code/vector3.cpp code/matrix3.cpp
+rm stills/*.bmp
+./a.exe $size $duration $fps brdfs/${brdf}.binary brdfs/${brdf2}.binary stills/
+rm render.avi
+ffmpeg -loglevel panic -f image2 -r $fps -i stills/%04d.bmp render.avi
